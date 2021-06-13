@@ -1,0 +1,378 @@
+\documentclass[utf8x]{beamer}
+\usetheme{Warsaw}
+
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[english]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{xcolor}
+\usepackage{svg}
+\usepackage{verbatim}
+\usepackage{upquote}
+\usepackage{textcomp}
+%\usepackage{stmaryrd}% for rrbracket and llbracket
+\usepackage{tabto}% for \tab tabulation marks in a list environment
+\usepackage[super]{nth}
+\usepackage{listings}
+
+\title{A short introduction to the UNIX commandline}
+\author{Jean-Baka Domelevo Entfellner}
+\institute{BecA-ILRI Hub, Nairobi, Kenya}
+\date{\nth{3}-Generation Genomics \& Bioinformatics CoP, June 2021}
+
+%\beamertemplatenavigationsymbolsempty
+%\setbeamertemplate{footline}[frame number]
+\setbeamertemplate{navigation symbols}{%
+    \usebeamerfont{footline}%
+    \usebeamercolor[fg]{footline}%
+    \hspace{1em}%
+    \insertframenumber/\inserttotalframenumber
+}
+
+\graphicspath{ {~/Logos/} }
+
+
+\DeclareMathOperator{\dist}{dist}
+\newcommand{\ra}[1]{\renewcommand{\arraystretch}{#1}}
+\renewcommand{\c}[1]{\texttt{#1}}
+\newcommand{\gc}[1]{\fcolorbox{gray!20}{gray!20}{\texttt{#1}}}
+%\newcommand{\gc}[1]{\fcolorbox{gray!20}{gray!20}{\lstinline{#1}}}
+\newcommand*{\helvet}{\fontfamily{phv}\selectfont\smaller}
+\newcommand*{\R}{{\fontfamily{phv}\selectfont\smaller R}\xspace}
+\newcommand*{\largehelvet}{\fontfamily{phv}\selectfont}
+\newcommand{\bt}{\`{}}% the backtick
+\newcommand{\tb}[1]{\textbf{#1}}
+
+
+\begin{document}
+
+\begin{frame}
+\maketitle
+\vfill
+	\includegraphics[height=1cm]{beca_logo.png} \hfill \includegraphics[height=1.1cm]{john-innes-logo.png} \hfill \includegraphics[height=0.9cm]{earlham-institute-logo-2lines.png} \hfill \includegraphics[height=1.0cm]{ilri.png}
+\end{frame}
+
+
+\begin{frame}[fragile]
+Program for today:
+	\begin{itemize}
+		\item what is an interpreter (shell)?
+		\item anatomy of a command
+		\item case-sensitivity
+		\item autocompletion
+		\item history of commands
+		\item navigating a Unix filesystem
+		\item creating folders and files
+	\end{itemize}
+\end{frame}
+
+\section{The basics}
+
+
+\begin{frame}[fragile]
+	\frametitle{What is a shell?}
+	A \textbf{shell} is a \textbf{command interpreter} that runs in a \textbf{terminal}. It runs as an \textbf{interactive evaluation loop}:
+	\begin{enumerate}
+		\item you type a commandline (simple or complex) at the \textbf{command prompt}
+		\item you hit \gc{Enter}
+		\item the shell interprets (``evaluates'') what you entered
+		\item the shell outputs something (or nothing!) as a response
+		\item you have the floor again (shell ``invite'' or ``prompt'')
+	\end{enumerate}
+
+
+	Popular shells on UNIX systems: csh, tsch, ksh, \textbf{bash} (Bourne-again shell). Find out which one is yours: \gc{echo \$SHELL}, \gc{ps} or \gc{file /proc/\$\$/exe}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Basic structure of a commandline}
+
+  \begin{alertblock}{All commandlines look like this:}
+	  \begin{verbatim}
+<command>  <options>  <arguments> \end{verbatim}
+  \end{alertblock}
+	\vspace{2ex}
+  \begin{enumerate}
+	  \item command (\textbf{compulsory}): either an executable or a builtin shell command. Examples: \gc{ls}, \gc{rm}, \gc{pwd}, \gc{cd}, \gc{export} (try \gc{which cd; which export})
+	  \item options (optional): either short one-letter form, collapsable (\gc{ls -alth}) or long format (\gc{grep -{}-file=patterns.txt})
+	  \item arguments (optional, depending on the command): the ``main stuff'' on which the command operates (\gc{cp source dest})
+  \end{enumerate}
+
+\end{frame}
+
+
+\begin{frame}[fragile]
+	\frametitle{My first commands}
+\begin{itemize}
+	\item \gc{pwd} to \textbf{p}rint the current \textbf{w}orking \textbf{d}irectory
+	\item \gc{cd Dir1}: to \textbf{c}hange \textbf{d}irectory into \verb+Dir1+ (must be present in current dir)
+	\item \gc{cd /var/scratch}: to \textbf{c}hange \textbf{d}irectory into \verb+/var/scratch+ (absolute path)
+	\item \gc{ls} to \textbf{l}i\textbf{s}t the contents of the current directory
+	\item \gc{ls Dir1} to \textbf{l}i\textbf{s}t the contents of \verb+Dir1+ (must be present in current dir)
+	\item \gc{man ls} to read the \textbf{man}ual page about \verb+ls+
+	\item \gc{chmod +x myscript.sh} to make the script \verb+myscript.sh+ executable (i.e.~\textbf{ch}ange its \textbf{mod}e a.k.a.~permissions) 
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]
+	\frametitle{More commands}
+\begin{itemize}
+	\item \gc{rm file1}: to \textbf{r}e\tb{m}ove \verb+file1+ (must be present in current dir)
+	\item \gc{mkdir Dir1}: to create (\tb{m}a\tb{k}e) an empty \tb{dir}ectory within the current directory
+	\item \gc{rmdir Dir1}: to \textbf{r}e\tb{m}ove the \textbf{dir}ectory \verb+Dir1+ (must be present in current dir)
+	\item \gc{mkdir -p Dir1/SubDir/SubSubDir} to \textbf{m}a\textbf{k}e a \textbf{dir}ectory and all its required parents, as necessary (silent command) 
+	\item \gc{touch newfile} to create (\textbf{touch}, as it changes the date of last modification) an empty file in the current directory
+	\item \gc{vim newfile} to edit it with my favorite editor, \textbf{Vi} i\textbf{m}proved
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{Autocompletion: the \textbf{tab} key is your friend}
+	\begin{alertblock}{Most important advice \#1}
+		Always autocomplete your command line with the \textbf{tab} key!
+  \end{alertblock}
+	\vspace{2ex}
+	The advantages are many:
+  \begin{enumerate}
+	  \item save typing time
+	  \item avoid mistyping 
+	  \item check in real time that you are ``on the right track'' (e.g. not trying to access folders that don't exist)
+  \end{enumerate}
+
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{Using the history}
+	\begin{alertblock}{Most important advice \#2}
+		Browse your command history using the \gc{$\uparrow$} (up arrow) key!
+  \end{alertblock}
+	\vspace{2ex}
+	More tricks with the history:
+  \begin{itemize}
+	  \item see it with \gc{history}
+	  \item start a commandline with a space \textbf{not} to record it in the history
+	  \item \gc{Ctrl+R} to browse it interactively
+	  \item use left or right arrow keys to edit the selected command
+	  \item \gc{!p} (or \gc{!f}, etc) to re-run the last command starting with \texttt{p} (resp. \texttt{f}) 
+  \end{itemize}
+
+\end{frame}
+
+
+
+\frame{
+	\frametitle{Bash character expansion}
+
+\begin{itemize}
+	\item a standalone \gc{*} gets expanded into the list of all files and folders in the current directory (see how \gc{ls *} differs from \gc{ls} when working dir contains folders)
+	\item \gc{*} within a string expands to all possible completions of that string, e.g. \gc{ls *.fasta}
+	\item \gc{?} globs one character exactly, e.g. \gc{b?sh} will match \texttt{bash} and \texttt{bush}, but not \texttt{bsh}
+	\item \gc{\string[\string]} to provide a list of characters to pick from: \gc{ls file[189]} will pick \texttt{file1}, \texttt{file8} and \texttt{file9} only
+	\item \gc{\string[\string]} can also include a range to pick from: \gc{ls file[5-9]} will pick \texttt{file5}, \texttt{file6}, \texttt{file7}, \texttt{file8} and \texttt{file9}
+\end{itemize}
+}
+
+\begin{frame}[fragile]
+	\frametitle{\texttt{ls} and the details of file permissions}
+	\gc{ls -l} gives a long listing:
+\begin{verbatim}
+$ ls -l 
+total 336
+-rw-r--r-- 1 jbde jbde   1776 Jul  2 03:21 bash_intro.aux
+-rw-r--r-- 1 jbde jbde  51179 Jul  2 03:21 bash_intro.log
+-rw-r--r-- 1 jbde jbde    747 Jul  2 03:21 bash_intro.nav
+-rw-r--r-- 1 jbde jbde      0 Jul  2 03:21 bash_intro.out
+-rw-r--r-- 1 jbde jbde 249549 Jul  2 03:21 bash_intro.pdf
+-rw-r--r-- 1 jbde jbde      0 Jul  2 03:21 bash_intro.snm
+-rwxr-xr-x 1 jbde jbde   4424 Jul  2 03:22 bash_intro.tex
+-rw-r--r-- 1 jbde jbde     23 Jul  2 03:21 bash_intro.toc
+-rw-r--r-- 1 jbde jbde    689 Jul  2 03:21 bash_intro.vrb
+-rwxr-xr-x 1 jbde jbde     22 Jul  1 20:10 echo_v.sh
+-rw-r--r-- 1 jbde jbde     53 Jul  1 20:31 test_less_than.sh
+-rwxr-xr-x 1 jbde jbde     28 Jul  1 19:38 test_script.sh
+-rw-r--r-- 1 jbde jbde    212 Jul  1 19:06 tmp
+	\end{verbatim}
+\end{frame}
+
+
+\frame{
+	\frametitle{Rights, aka permissions}
+	On normal files:
+\begin{itemize}
+	\item \gc{r} to \textbf{r}ead (value=4)
+	\item \gc{w} to \tb{w}rite (value=2)
+	\item \gc{x} to e\tb{x}ecute, e.g. to use it as a command (value=1)\\
+\end{itemize}
+
+On directories:
+\begin{itemize}
+	\item \gc{r} to \tb{r}ead the contents of the directory (e.g. to \gc{ls} it or to autocomplete filenames in it) 
+	\item \gc{w} to \tb{w}rite (meaning: to create and delete files in it)
+	\item \gc{x} to \textbf{traverse} it (i.e. to browse to subfolders)\\
+\end{itemize}
+
+To whom do those rights apply:
+	\begin{itemize}
+		\item \gc{u} for the owner of the file or directory (\tb{u}ser)
+		\item \gc{g} for the \tb{g}roup the file or directory belongs to
+		\item \gc{o} for the rest of the world (the ``\tb{o}thers'')
+	\end{itemize}
+}
+
+\frame{
+	\frametitle{Changing owner/permissions}
+	\begin{itemize}
+		\item \gc{chown caleb myfile1 myfile2}: give ownership of these files to user \texttt{caleb}
+		\item \gc{chgrp team1 myfile1 myfile2}: set group to \texttt{team1}
+		\item \gc{chmod 755 file1}: change permissions to \texttt{rwxr-xr-x}
+		\item \gc{chmod 744 file1}: change permissions to \texttt{rwxr-{}-r-{}-}
+		\item \gc{chmod 400 file1}: change permissions to \texttt{r-{}-{}-{}-{}-{}-{}-{}-}
+		\item \gc{chmod -w file1}: remove ``write'' right to all
+		\item \gc{chmod o-w file1}: remove ``write'' for the ``rest of the world''
+		\item \gc{chmod u+x,go-w file1}: add ``execute'' write to user, and remove ``write'' right for all other users 
+	\end{itemize}
+	}
+
+\frame{
+	\frametitle{Redirections}
+	\begin{enumerate}
+		\item redirecting standard output only: \gc{echo "hello" > myfile}
+		\item redirecting without overwritting, but appending to existing content: \gc{echo "hello" >{}> myfile}
+		\item redirecting standard error stream only: \gc{expr 3 / 0 2> errors.txt}
+		\item redirecting both: \gc{cat /var/log/*.log \&> outfile}
+		\item feeding standard input from a file: \gc{grep abc < file\_in} same as \gc{cat file\_in | grep abc}
+	\end{enumerate}
+
+	\vspace{1ex}
+
+	Every single process (including your shell) has a standard input stream (code 0), a standard output stream (code 1), and a standard error stream (code 2): try \gc{file /proc/\$\$/fd/0}
+
+}
+
+\section{A bit more advanced}
+
+\begin{frame}[fragile]
+	\frametitle{Control flow: \textbf{if} \ldots \textbf{else} constructs}
+
+	\begin{verbatim}
+	if [ -e hello.txt ]
+	then
+	  echo "The file exists!"
+	else
+	  echo "The file doesn't exist!"
+	fi
+	\end{verbatim}
+
+	Pay careful attention: put spaces after \gc{\string[} and before \gc{\string]}!\vspace{3ex}
+
+	Same loop as above, but in a one-liner:\\
+	\gc{if \string[ -e hello.txt \string]; then echo "ok"; else echo "no"; fi}
+
+\end{frame}
+
+
+\begin{frame}[fragile]
+	\frametitle{Control flow: \textbf{for} loops}
+
+	\begin{verbatim}
+	for file in *.sh
+	do
+	  echo "File ${file} has $(wc -l < ${file}) lines"
+	done
+	\end{verbatim} \vspace{2ex}
+
+	After the \gc{in} keyword must appear some string that will be interpreted as a sequence of tokens separated by spaces, for instance \gc{\{0..4\}} will be translated into ``0 1 2 3 4''.
+	\vspace{2ex}
+
+	Same loop as above, but in a one-liner:\\
+	\gc{\parbox{\textwidth}{for file in *.sh; do echo "File \$\{file\} has \textbackslash\newline\hspace*{1cm} \$(wc -l < \$\{file\}) lines"; done}}
+
+\end{frame}
+
+\frame{
+	\frametitle{Bash variables: built-ins}
+	To use the value of a shell variable, use the \gc{\$} sign before the variable name. A few \textbf{built-in} variables:
+	\begin{itemize}
+		\item \gc{\$?} last return value
+		\item \gc{\$PWD} the current working directory
+		\item \gc{\$SHELL} the shell you're using
+		\item \gc{\$\#} is the number of commandline arguments (in a script)
+		\item \gc{\$*} all the commandline arguments (as a single string)
+		\item \gc{\$0} the zero-th positional argument (i.e. the command)
+		\item \gc{\$1}, \gc{\$2}, \ldots{} the following positional arguments (separated on the commandline by one or more spaces)
+	\end{itemize}
+
+}
+
+\frame{
+	\frametitle{Create your own variable names}
+
+	\begin{alertblock}{Beware of spaces when assigning variables!}
+		\textbf{NO SPACES} before or after that equal sign!!\\
+		\gc{myvar=5}\\
+		\gc{mypath=/var/scratch/jb}
+	\end{alertblock}
+
+	New variables are created \emph{locally} in the current environment: use \gc{export} to make them persistent.\\Try: \gc{z=4 ; bash -c \textquotesingle echo \$z\textquotesingle} vs \gc{export z=4 ; bash -c \textquotesingle echo \$z\textquotesingle}\\
+	\vspace{2ex}
+	By default, Bash variables are \textbf{strings}:
+	\gc{u=4 ; v=20 ; if [ \$u \string\< \$v ]; then echo "yes"; fi}
+}
+
+
+\frame{
+	\frametitle{Working with variables}
+	Variable names MUST NOT start with a digit or a non-letter sign.\\
+	Beware where Bash thinks your variable name ends:\\
+	\gc{myvar=1; echo \$myvar\_2}\\
+	\vspace{2ex}
+	\pause
+	Correct syntax:
+	\gc{myvar=1; echo \$\{myvar\}\_2}\\
+
+}
+
+\frame{
+	\frametitle{Bash quoting}
+\emph{Weak quoting} with double quotes will not prevent variable interpretation:
+	\gc{a=5; echo "\$a"} prints ``\texttt{5}''\\
+	Quotes are essential to include spaces in your text:\\
+	\gc{myvar="hello boy!"}\\
+\vspace{3ex}
+\emph{Strong quoting} prevents interpretation of basically everything:
+	\gc{a=5; echo \textquotesingle\$a\textquotesingle} prints ``\texttt{\$a}''\\
+
+}
+
+\frame{
+	\frametitle{Command substitution}
+
+		The purpose of \textbf{command substitution} is to execute a command (possibly with calculated arguments) and to store its output in a Bash variable.\vspace{3ex}\\
+
+	Syntax: \gc{\$(ls -1 | wc -l)} or \gc{\bt ls -1 | wc -l\bt}\vspace{3ex}\\
+
+	Example of use: \gc{numfiles=\$(ls | wc -l)}
+}
+
+
+\frame{
+	\frametitle{String manipulation with Bash}
+The construct with curly braces allow elaborate string manipulation:
+\begin{itemize}
+	\item \gc{mystring="hello aloha36"; echo \$\{mystring\}}: this you know...
+	\item \gc{\$\{\#mystring\}} to get the number of characters in the string
+	\item \gc{\$\{mystring\%\string[0-9\string]*\}} deletes \tb{shortest} match from \tb{end} of string
+	\item \gc{\$\{mystring\%\%\string[0-9\string]*\}} deletes \tb{longest} match from \tb{end} of string
+	\item \gc{\$\{mystring\#*a\}} deletes \tb{shortest} match from \tb{beginning} of string
+	\item \gc{\$\{mystring\#\#*a\}} deletes \tb{longest} match from \tb{beginning} of string
+\end{itemize}
+
+	}
+
+
+
+\end{document}

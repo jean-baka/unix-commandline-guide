@@ -10,9 +10,9 @@ In most cases, the questions below are independent of each other. Many questions
 
   4. How do you access the help on a given command, for instance the help on `grep`?
 
-  5. Which command would you use in order to create an empty file in the current directory, let's say empty.txt? 
+  5. Which command would you use in order to create an empty file in the current directory, let's say `empty.txt`? 
 
-  6. Suppose your current working directory contains a file named seqs.txt. How do you rename this file into sequences.fasta? Does this have any effect on the content of the file, and if yes, what does it do?
+  6. Suppose your current working directory contains a file named `seqs.txt`. How do you rename this file into `sequences.fasta`? Does this have any effect on the content of the file, and if yes, what does it do?
 
   7. In Unix, how does the extension of a file (the part of the filename after the dot) matter?
 
@@ -20,7 +20,7 @@ In most cases, the questions below are independent of each other. Many questions
 
   9. How can you create in a single command a file containing the contents "Hello, world!" and named `universal_greeting.txt`?
 
-  10. What about creating the same file but with filename "universal greeting.txt" (the filename contains a space)?
+  10. What about creating the same file but with filename `universal greeting.txt` (the filename contains a space)?
 
   11. In Bash, how do you redirect the output of a command so that it is not displayed on the screen but rather goes into a file?
 

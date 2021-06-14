@@ -117,6 +117,31 @@ Program for today:
 
 
 \begin{frame}[fragile]
+	\frametitle{Strucure of Unix filesystems (1/2)}
+\begin{itemize}
+	\item \gc{/} the root: topmost point. Nothing exists above this.
+	\item \gc{/home}: the folders in which all \textbf{home directories} reside, e.g. \gc{/home/antso/} or \gc{/home/linly/}, etc: the only place you will write to
+	\item \gc{/etc}: configuration files for the system and the applications
+	\item \gc{/mnt}: a common \textbf{mountpoint}. External disks can be mounted here, or under...
+	\item \gc{/media}: another common \textbf{mountpoint}. External disks are usually mounted here (e.g. on recent Ubuntu's).
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]
+	\frametitle{Strucure of Unix filesystems (2/2)}
+\begin{itemize}
+	\item \gc{/lib}, \gc{/lib32} and  \gc{/lib64}: libraries (pieces of software used by more than one program)
+	\item \gc{/opt} and \gc{/usr}: places where third-party software can be installed. Lots of executables live under \gc{/usr/bin} or \gc{/usr/local/bin}.
+	\item \gc{/proc}: dynamic directory containing detailed info about the current processes
+	\item \gc{/sys}: dynamic directory containing detailed info about the hardware (get or set hw control values)
+	\item \gc{/tmp}: a directory (writable by all) to store temporary files
+	\item \gc{/var}: used by programs to store temporary files and logs 
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]
 	\frametitle{More commands}
 \begin{itemize}
 	\item \gc{rm file1}: to \textbf{r}e\tb{m}ove \verb+file1+ (must be present in current dir)
@@ -194,7 +219,6 @@ total 336
 -rwxr-xr-x 1 jbde jbde     22 Jul  1 20:10 echo_v.sh
 -rw-r--r-- 1 jbde jbde     53 Jul  1 20:31 test_less_than.sh
 -rwxr-xr-x 1 jbde jbde     28 Jul  1 19:38 test_script.sh
--rw-r--r-- 1 jbde jbde    212 Jul  1 19:06 tmp
 	\end{verbatim}
 \end{frame}
 
@@ -299,6 +323,7 @@ To whom do those rights apply:
 	\begin{itemize}
 		\item \gc{\$?} last return value
 		\item \gc{\$PWD} the current working directory
+		\item \gc{\$\$} the process identifier (PID) of the current shell
 		\item \gc{\$SHELL} the shell you're using
 		\item \gc{\$\#} is the number of commandline arguments (in a script)
 		\item \gc{\$*} all the commandline arguments (as a single string)

@@ -21,7 +21,7 @@ In most cases, the questions below are independent of each other. Many questions
 
   9. How can you process the file you got from question 10 to replace all its uppercase "A" letters into lowercase "a" letters, leaving the rest untouched? (Hint: `tr`)
 
-  10. In one command, ask for the display of all identifier lines from the same file `nrf1_seq.fa` without wrapping the lines, i.e. by having all lines displayed on your screen effectively start with the character ̀>`. (Hint: `less`)
+  10. In one command, ask for the display of all identifier lines from the same file `nrf1_seq.fa` without wrapping the lines, i.e. by having all lines displayed on your screen effectively start with the character `>`. (Hint: `less`)
 
   11. Can you write a very short script (possibly one single commandline) to extract from the same file the species names? (Hint: `cut`, `grep`)
 

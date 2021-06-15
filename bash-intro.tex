@@ -196,7 +196,7 @@ Program for today:
 	\item a standalone \gc{*} gets expanded into the list of all files and folders in the current directory (see how \gc{ls *} differs from \gc{ls} when working dir contains folders)
 	\item \gc{*} within a string expands to all possible completions of that string, e.g. \gc{ls *.fasta}
 	\item \gc{?} globs one character exactly, e.g. \gc{b?sh} will match \texttt{bash} and \texttt{bush}, but not \texttt{bsh}
-	\item \gc{\string[\string]} to provide a list of characters to pick from: \gc{ls file[189]} will pick \texttt{file1}, \texttt{file8} and \texttt{file9} only
+	\item \gc{\string[\string]} to provide a list of individual characters to pick from: \gc{ls file[189]} will pick \texttt{file1}, \texttt{file8} and \texttt{file9} only
 	\item \gc{\string[\string]} can also include a range to pick from: \gc{ls file[5-9]} will pick \texttt{file5}, \texttt{file6}, \texttt{file7}, \texttt{file8} and \texttt{file9}
 \end{itemize}
 }

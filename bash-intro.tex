@@ -144,11 +144,11 @@ Program for today:
 \begin{frame}[fragile]
 	\frametitle{More commands}
 \begin{itemize}
-	\item \gc{rm file1}: to \textbf{r}e\tb{m}ove \verb+file1+ (must be present in current dir)
+	\item \gc{rm file1}: to \textbf{r}e\tb{m}ove \verb+file1+ (must be present in current dir and empty)
 	\item \gc{mkdir Dir1}: to create (\tb{m}a\tb{k}e) an empty \tb{dir}ectory within the current directory
 	\item \gc{rmdir Dir1}: to \textbf{r}e\tb{m}ove the \textbf{dir}ectory \verb+Dir1+ (must be present in current dir)
 	\item \gc{mkdir -p Dir1/SubDir/SubSubDir} to \textbf{m}a\textbf{k}e a \textbf{dir}ectory and all its required parents, as necessary (silent command) 
-	\item \gc{touch newfile} to create (\textbf{touch}, as it changes the date of last modification) an empty file in the current directory
+	\item \gc{touch newfile} to create (\textbf{touch}, as it changes the date of last modification of an already existing file) an empty file in the current directory
 	\item \gc{vim newfile} to edit it with my favorite editor, \textbf{Vi} i\textbf{m}proved
 \end{itemize}
 \end{frame}
@@ -363,12 +363,14 @@ To whom do those rights apply:
 
 \frame{
 	\frametitle{Bash quoting}
-\emph{Weak quoting} with double quotes will not prevent variable interpretation:
-	\gc{a=5; echo "\$a"} prints ``\texttt{5}''\\
+\textbf{Weak quoting} with double quotes will not prevent variable interpretation:
+	\gc{a=5; echo "\$a"} prints ``\texttt{5}''.\\
+
+\vspace{1ex}
 	Quotes are essential to include spaces in your text:\\
 	\gc{myvar="hello boy!"}\\
 \vspace{3ex}
-\emph{Strong quoting} prevents interpretation of basically everything:
+\textbf{Strong quoting} with single quotes prevents interpretation of basically everything:
 	\gc{a=5; echo \textquotesingle\$a\textquotesingle} prints ``\texttt{\$a}''\\
 
 }

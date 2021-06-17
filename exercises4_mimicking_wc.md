@@ -1,4 +1,5 @@
-## Mimicking the Unix utility `wc` with a script
+Mimicking the Unix utility `wc` with a script
+======================
 
 The idea for this exercise came from Sana Adam who said on Thursday "Sir, we could ask for the user input!" ;-)
 

@@ -16,6 +16,6 @@ The exercise
 
 1. Write a small shell program that asks for the user input, and then reports in a user-friendly way a message telling the number of words and the number of characters in the input, e.g. "The input contained xx words, yy characters in total."
 
-2. Add the line `#!/bin/bash` as the first line of your script, change its name to `wc` and change its permissions so that you can execute it.
+2. Add the line `#!/bin/bash` as the first line of your script, change its name to `wc` and change its permissions so that you can run it directly as an executable file, without having to pass it as an argument to a `bash` command.
 
 3. Run you program. What happens when you type `wc`? And what when you type `./wc`? 

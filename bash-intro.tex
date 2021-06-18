@@ -285,7 +285,7 @@ To whom do those rights apply:
 	\frametitle{Tests on files}
 	\textbf{Careful!! Always have spaces around your square brackets!}
 	\begin{itemize}
-		\item \gc{[ -f file.txt ]} tests for the presence (existence) of the said file
+		\item \gc{[ -e file.txt ]} tests for the presence (existence) of the said file
 		\item \gc{[ -s file.txt ]} tests that the file is not of size 0
 		\item \gc{[ -f file.txt ]} tests that the file is a regular one (i.e. not a directory or a device file, etc)
 		\item \gc{[ -w file.txt ]} tests that the current user has write permission on the file

@@ -41,6 +41,11 @@ do
 		# my line is not a line of identifier,
 		# but a line of sequence data
 		buffer="${myline}"
+
+		# the above still needs to be fixed, so that:
+		# (1) it's not only the last line of a sequence that gets printed out
+		# (2) we get rid of the first empty line that is present at the top
+		# of the output  
 	fi	
 
 done                       <$1

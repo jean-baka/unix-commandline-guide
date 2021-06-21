@@ -9,7 +9,9 @@ In a Newick or NHX tree file, branch lengths (when they exist) immediately follo
   2. Get the range of the branch lengths: what is the minimum branch length and the maximum branch length? Write a small program that outputs those two values, and that would work as well on huge trees with thousands of taxa.
 
   3. In phylogenetics, the **tree length** is the sum of all the branch lengths in that tree. While pure, "basic" Bash only handles integer arithmetics through e.g. the `expr` command, it is possible to do non-integer arithmetics via the use of the `bc` utility (which stands for "**b**asic **c**alculator"). Just pass the expression to calculate to the standard input of `bc`, like so:
+
 > $ echo "(0.003 + 0.456) * (-37)" | bc -l
+
 > -16.983
 
 Calculate the tree length for the tree in `phyldog.nhx`. As `bc` doesn't understand the scientific notation, we can leave the (small) branch lengths written in scientific notation for now, under we see ways to a more satisfactory solution.

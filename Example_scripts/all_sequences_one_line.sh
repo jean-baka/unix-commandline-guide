@@ -7,6 +7,7 @@ then
 	exit 14
 fi
 
+# checking that the argument #1 corresponds to an existing file
 if [ ! -e $1 ]
 then
 	echo "Unable to find the file $1" >/dev/stderr
@@ -19,20 +20,32 @@ fi
 # The said file is the one given as the first commandline argument.
 while read myline 
 do
-   echo "line: ${myline}" 
-done                       < $1   
+	# complex solution involving a call to echo and
+	# a call to grep
+	# first_char=$( echo ${myline} | grep -o '^.' )
+	# simpler version:
+	first_char=${myline:0:1} # extracting 1 char from position 0
+
+	# echo "line: ${myline}" 
+	# echo "1st char: ${first_char}" 
+
+	if [ "${first_char}" = ">" ]
+	then
+		# we write out the buffer of the previous sequence
+		echo "${buffer}" 
+		# we clear the buffer
+		buffer=""
+		# we echo the current identifier line
+		echo "${myline}"
+	else
+		# my line is not a line of identifier,
+		# but a line of sequence data
+		buffer="${myline}"
+	fi	
+
+done                       <$1
 
 
-exit
 
 
-
-
-for i in $( seq $# )
-do
-  curr_arg=$( eval echo \$$i )
-  # the escape character in the above is necessary in order to
-  # prevent the expansion by bash of "$$" (which yields the current PID)
-  echo "The argument #$i is: ${curr_arg}"
-done
 

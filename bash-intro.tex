@@ -295,6 +295,32 @@ To whom do those rights apply:
 	\end{itemize}
 \end{frame}
 
+
+\begin{frame}[fragile]
+	\frametitle{Tests on integer variables}
+	\textbf{Careful!! Always have spaces around your square brackets!}
+	\begin{itemize}
+		\item \gc{[ \$a -eq \$b ]} true if the value in variable a \textbf{eq}uals the value in variable b
+		\item \gc{[ \$a -ne \$b ]} true if variables a and b are \textbf{n}ot \textbf{e}qual
+		\item \gc{[ \$a -gt \$b ]} true if variable a is strictly \textbf{g}reater \textbf{t}han variable b
+		\item \gc{[ \$a -ge \$b ]} true if variable a is \textbf{g}reater or \textbf{e}qual to b
+		\item \gc{[ \$a -lt \$b ]} true if variable a is strictly \textbf{l}ess \textbf{t}han b
+		\item \gc{[ \$a -le \$b ]} true if variable a is \textbf{l}ess than or \textbf{e}qual to b
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]
+	\frametitle{Tests on strings}
+	\textbf{Careful!! Always have spaces around your square brackets!}
+	\begin{itemize}
+		\item \gc{[ "\$a" = "\$b" ]} true if the two strings are equal (careful with the spaces around "="!)
+		\item \gc{[ "\$a" != "\$b" ]} true if the two strings differ
+		\item \gc{[ "\$a" < "\$b" ]} true if string \$a is (in ASCII alphabetical order) before string \$b
+		\item \gc{[ "\$a" <= "\$b" ]} true if string \$a is (in ASCII alphabetical order) before string \$b, or equal to it
+	\end{itemize}
+\end{frame}
+
 \subsection{Control flow}
 
 \begin{frame}[fragile]

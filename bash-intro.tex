@@ -316,8 +316,8 @@ To whom do those rights apply:
 	\begin{itemize}
 		\item \gc{[ "\$a" = "\$b" ]} true if the two strings are equal (careful with the spaces around "="!)
 		\item \gc{[ "\$a" != "\$b" ]} true if the two strings differ
-		\item \gc{[ "\$a" < "\$b" ]} true if string \$a is (in ASCII alphabetical order) before string \$b
-		\item \gc{[ "\$a" <= "\$b" ]} true if string \$a is (in ASCII alphabetical order) before string \$b, or equal to it
+		\item \gc{[ "\$a" \string\< "\$b" ]} true if string \$a is (in ASCII alphabetical order) before string \$b (\textbf{Warning! The "less than" sign has to be escaped!})
+		\item \gc{[ "\$a" \string\> "\$b" ]} true if string \$a is (in ASCII alphabetical order) after string \$b (\textbf{Warning! The "greater than" sign has to be escaped!})
 	\end{itemize}
 \end{frame}
 

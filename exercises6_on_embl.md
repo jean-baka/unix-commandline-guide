@@ -22,7 +22,7 @@ The goal of this exercise is to produce a tab-separated file in which each line 
 
 Moreover, since this embl file pertains to some African swine fever strain, many gene names contain in their final letter the indication on which strand they are on: "R" stands for the **r**ight direction, i.e. the reference strain, while "L" stands for the **l**eft direction, i.e. the complement strain.
 
-Your script must post to the standard error stream a warning message each time the final letter of a gene name is not in accordance with the fact that "R" genes **must not** have a "complement(...)" position information, while "L" genes **do require** such a position information.
+Your script must post to the standard error stream a warning message each time the final letter of a gene name is not in accordance with the fact that "R" genes **must not** have a `complement(...)` CDS position information, while "L" genes **do require** such a position information.
 
 When a gene name does not end with an uppercase letter (e.g. in the case of "ASFV\_G\_ACD\_01990"), no check must be performed about this.
 

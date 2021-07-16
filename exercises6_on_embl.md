@@ -5,7 +5,7 @@ In this set of exercises, we will work on EMBL files. Those contain annotations,
 These exercises can be tackled either with Unix commandline tools (the basic shell utilities called from a Bash script, or more advanced stream editors like sed and awk) as well as with Python.
 
 
-## Basic statistics (gff-like) on the annotations
+## 1. Basic statistics (gff-like) on the annotations
 
 The goal of this exercise is to produce a tab-separated file in which each line gives information on an annotation present in [this input file](https://github.com/jean-baka/unix-commandline-guide/blob/main/Sample_datafiles/MN393476.embl). This case is a simplified one compared to the most generic case of annotation files in the EMBL format, since this example is from a virus and does not contain gene models with introns. The fields in the output file shall be as follows:
 
@@ -28,7 +28,7 @@ When a gene name does not end with an uppercase letter (e.g. in the case of "ASF
 
 
 
-## Sorting a gff-like file
+## 2. Sorting a gff-like file
 
 In a separate program or commandline, work on sorting the output of the previous script in two different orderings:
 
@@ -38,23 +38,23 @@ In a separate program or commandline, work on sorting the output of the previous
 
 
 
-## Producing a Fasta file with all the translations
+## 3. Producing a Fasta file with all the translations
 
 From the same input embl file, produce a (multi-)Fasta file containing all the translations, as amino-acid sequences. The identifiers will be the protein IDs, but the rest of the identifier line will contain "from gene xxx", as so:
 
-> \>QIE06932.1 from gene I196L
-> MLFRYLVWLFRFIEVKNVVSISLLVIGSNYLTTAISNNTSTTISP
-> TTTSSNYLMTAISNNTSTTISPTTTSSNYLMTAIPNIISDKEDDIHFSTDKTVFDRLSP
-> ITLYRAIRSTLNDTSTKTMTDHILTRPYRPTTVIFHSDTPQPVKNATQGNIVKKIYRQV
-> LTFFIQPNPLFPCFKNHEVFLNLANILNTILCIILIKNV
+    >QIE06932.1 from gene I196L
+    MLFRYLVWLFRFIEVKNVVSISLLVIGSNYLTTAISNNTSTTISP
+    TTTSSNYLMTAISNNTSTTISPTTTSSNYLMTAIPNIISDKEDDIHFSTDKTVFDRLSP
+    ITLYRAIRSTLNDTSTKTMTDHILTRPYRPTTVIFHSDTPQPVKNATQGNIVKKIYRQV
+    LTFFIQPNPLFPCFKNHEVFLNLANILNTILCIILIKNV
 
 Even better if you can beautify the output a bit by having all lines but the last one being of the same length, for instance 60 or 80 characters.
 
 
-## Producing a Fasta file with all the gene nucleotide sequences
+## 4. Producing a Fasta file with all the gene nucleotide sequences
 
 Here, you will use the position information together with the full sequence that is present at the end of the file (section introduced by the `SQ` tag) in order to produce a Fasta file containing all the gene nucleotide sequences.
 
 When a gene is encoded on the complement strand, you will have to write out the correct reverse-complement sequence, not just an excerpt of the reference sequence itself. Basically, in the end, all your output sequences are expected to start with "ATG".
 
-**This exercise is difficult**. In case you are using Awk or Bash, you will have to learn a bit more how to handle **arrays** in these programming environments, because you will have to store an arbitrary number of things in memory before re-using the same. That is typically done through arrays or tables.
+**This last exercise is difficult**. In case you are using Awk or Bash, you will have to learn a bit more how to handle **arrays** in these programming environments, because you will have to store an arbitrary number of things in memory before re-using the same. That is typically done through arrays or tables.
